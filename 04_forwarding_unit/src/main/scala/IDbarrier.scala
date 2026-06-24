@@ -10,16 +10,12 @@ ID-Barrier: pipeline register between Decode and Execute stages
 Internal Registers:
     uop: micro-operation code (from uopc enum)
     rd: destination register index, initialized to 0
-    rs1: first source register index (for forwarding unit)
-    rs2: second source register index (for forwarding unit)
     operandA: first source operand, initialized to 0
     operandB: second operand/immediate, initialized to 0
 
 Inputs:
     inUOP: micro-operation code from ID stage
     inRD: destination register from ID stage
-    inRS1: first source register from ID stage
-    inRS2: second source register from ID stage
     inOperandA: first operand from ID stage
     inOperandB: second operand/immediate from ID stage
     inXcptInvalid: exception flag from ID stage
@@ -27,12 +23,9 @@ Inputs:
 Outputs:
     outUOP: micro-operation code to EX stage
     outRD: destination register to EX stage
-    outRS1: first source register to forwarding unit
-    outRS2: second source register to forwarding unit
     outOperandA: first operand to EX stage
     outOperandB: second operand to EX stage
     outXcptInvalid: exception flag to EX stage
-
 Functionality:
     Save all input signals to a register and output them in the following clock cycle
 */

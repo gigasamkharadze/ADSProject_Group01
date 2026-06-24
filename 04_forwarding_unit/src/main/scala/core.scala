@@ -5,7 +5,7 @@
 // File created on 01/15/2023 by Tobias Jauch (@tojauch)
 
 /*
-The goal of this task is to implement a 5-stage pipeline that features a subset of RV32I (all R-type and I-type instructions).
+The goal of this task is to implement a 5-stage pipeline that features a subset of RV32I (all R-type and I-type instructions). 
 
     Instruction Memory:
         The CPU has an instruction memory (IMem) with 4096 words, each of 32 bits.
@@ -34,7 +34,6 @@ The goal of this task is to implement a 5-stage pipeline that features a subset 
         Execute Stage:
             Arithmetic and logic operations are performed based on the control signals and operands.
             The result is stored in the aluResult register.
-            Data hazards are resolved through forwarding of results from later stages.
 
         Memory Stage:
             No memory operations are implemented in this basic CPU.

@@ -25,15 +25,13 @@ Internal Signals:
 
 Functionality:
     Decode opcode to determine instruction and identify operation (ADD, SUB, XOR, ...)
-    Output: uop (operation code), rd, rs1, rs2, operandA (from rs1), operandB (rs2 or immediate)
+    Output: uop (operation code), rd, operandA (from rs1), operandB (rs2 or immediate)
 
 Outputs:
     uop: micro-operation code (identifies instruction type)
     rd: destination register index
-    rs1: first source register index (for forwarding unit)
-    rs2: second source register index (for forwarding unit)
     operandA: first operand
-    operandB: second operand
+    operandB: second operand 
     XcptInvalid: exception flag for invalid instructions
 */
 

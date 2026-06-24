@@ -5,7 +5,7 @@
 // File created on 01/09/2026 by Tobias Jauch (@tojauch)
 
 /*
-Instruction Execute (EX) Stage: ALU operations with forwarding multiplexers
+Instruction Execute (EX) Stage: ALU operations and exception detection
 
 Instantiated Modules:
     ALU: Integrate your module from Assignment02 for arithmetic/logical operations
@@ -16,16 +16,12 @@ ALU Interface:
     alu.io.operation: operation code controlling ALU function
     alu.io.aluResult: computation result output
 
-Forwarding Multiplexers:
-    Select ALU inputs from original operands or forwarded values based on mux selects
-
 Internal Signals:
     Map uopc codes to ALUOp values
 
 Functionality:
     Map instruction uop to ALU operation code
-    Select between original and forwarded operands based on hazard detection
-    Pass selected operands to ALU
+    Pass operands to ALU
     Output results to pipeline
 
 Outputs:
