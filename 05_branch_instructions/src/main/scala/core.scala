@@ -149,7 +149,6 @@ class PipelinedRV32Icore (BinaryFile: String) extends Module {
   // Branch control: wire flush and branch target from WB back to IF
   ifStage.io.flush        := wbBarrier.io.outFlush
   ifStage.io.branchTarget := wbBarrier.io.outBranchTarget
-  ifStage.io.branchTaken  := wbBarrier.io.outFlush
 
   // Outputs
   io.check_res := wbBarrier.io.outCheckRes

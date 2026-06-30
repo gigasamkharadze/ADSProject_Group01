@@ -4,14 +4,96 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8870d041-cb33-44b2-aa59-465edd8aeebd" name="Changes" comment="" />
+    <list default="true" id="8870d041-cb33-44b2-aa59-465edd8aeebd" name="Changes" comment="reuse module">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/EXstage.scala" beforeDir="false" afterPath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/EXstage.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/ForwardingUnit.scala" beforeDir="false" afterPath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/ForwardingUnit.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/IDstage.scala" beforeDir="false" afterPath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/IDstage.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/IFstage.scala" beforeDir="false" afterPath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/IFstage.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/core.scala" beforeDir="false" afterPath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/core.scala" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_/Users/gigasamkharadze/IdeaProjects/ADSProject_Group01" value="3FbKaXXfzFogokxN8IO9U9Ejjzq" />
+    </persistenceIdMap>
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.4140753030044817" />
+      <entry key="MS500" value="3.2064864200389227" />
+      <entry key="S2" value="5.10763657785303" />
+      <entry key="S5" value="7.521159067402309" />
+      <entry key="S10" value="9.274478378689855" />
+      <entry key="S30" value="11.042765619810003" />
+      <entry key="S60" value="12.630525793894282" />
+      <entry key="M2" value="16.59703192086679" />
+      <entry key="M5" value="27.216474615155256" />
+      <entry key="M10" value="40.98699452666997" />
+      <entry key="M15" value="52.1068126792399" />
+      <entry key="M30" value="74.11667462900371" />
+      <entry key="H1" value="93.89235030517693" />
+      <entry key="H2" value="107.6267501667125" />
+      <entry key="H4" value="115.79438271272556" />
+      <entry key="D1" value="123.3873991234107" />
+      <entry key="W1" value="124.76762253521899" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="0.0" />
+      <entry key="S60" value="0.0" />
+      <entry key="M2" value="0.0" />
+      <entry key="M5" value="0.0" />
+      <entry key="M10" value="0.0" />
+      <entry key="M15" value="0.0" />
+      <entry key="M30" value="0.0" />
+      <entry key="H1" value="0.0" />
+      <entry key="H2" value="0.0" />
+      <entry key="H4" value="0.0" />
+      <entry key="D1" value="0.0" />
+      <entry key="W1" value="0.0" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="1.3506312916538301" />
+      <entry key="MS500" value="3.1800775016941434" />
+      <entry key="S2" value="5.097444663787639" />
+      <entry key="S5" value="7.51530121523308" />
+      <entry key="S10" value="9.270904816355015" />
+      <entry key="S30" value="11.041275505186562" />
+      <entry key="S60" value="12.629177349386515" />
+      <entry key="M2" value="16.59543290241275" />
+      <entry key="M5" value="27.214771947787685" />
+      <entry key="M10" value="40.98547577993848" />
+      <entry key="M15" value="52.105478265594165" />
+      <entry key="M30" value="74.11571758880405" />
+      <entry key="H1" value="93.89175027452738" />
+      <entry key="H2" value="107.62640936881122" />
+      <entry key="H4" value="115.79420038712782" />
+      <entry key="D1" value="123.38736690630641" />
+      <entry key="W1" value="124.76761788551342" />
+    </decayedShown>
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -24,17 +106,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/gvant/OneDrive/Desktop/ADSProject_Group01&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/gvant/OneDrive/Desktop/ADSProject_Group01",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.25134.95" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.25134.95" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="8870d041-cb33-44b2-aa59-465edd8aeebd" name="Changes" comment="" />
@@ -42,7 +145,38 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1779879870460</updated>
+      <workItem from="1782389540280" duration="629000" />
+      <workItem from="1782392923217" duration="2725000" />
+      <workItem from="1782473511743" duration="1266000" />
+      <workItem from="1782852602113" duration="3888000" />
     </task>
+    <task id="LOCAL-00001" summary="reuse module">
+      <option name="closed" value="true" />
+      <created>1782340338155</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1782340338155</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="reuse module" />
+    <option name="LAST_COMMIT_MESSAGE" value="reuse module" />
   </component>
 </project>

@@ -72,13 +72,10 @@ class ID extends Module {
   val rs2F   = io.instr(24, 20)
   val funct7 = io.instr(31, 25)
 
-  // I-type immediate (12-bit, sign-extended)
   val immI   = Cat(Fill(20, io.instr(31)), io.instr(31, 20))
 
-  // B-type immediate (12-bit, sign-extended): [31:25] and [11:7] contain bits [12|10:5] and [4:1|11]
+  // Decode J-Type and B-Type Immediates
   val immB   = Cat(Fill(20, io.instr(31)), io.instr(31), io.instr(7), io.instr(30, 25), io.instr(11, 8), 0.U(1.W))
-
-  // J-type immediate (20-bit, sign-extended): [31:12] contain bits [20|10:1|11|19:12]
   val immJ   = Cat(Fill(12, io.instr(31)), io.instr(19, 12), io.instr(20), io.instr(30, 21), 0.U(1.W))
 
   io.regFileReq_A.addr := rs1F
@@ -93,7 +90,6 @@ class ID extends Module {
   io.pcOut       := io.pc
   io.XcptInvalid := false.B
 
-  // R-type instructions (opcode 0x33)
   when(opcode === "b0110011".U) {
     when(funct3 === "b000".U && funct7 === "b0000000".U)      { io.uop := uopc.isADD  }
     .elsewhen(funct3 === "b000".U && funct7 === "b0100000".U) { io.uop := uopc.isSUB  }
@@ -106,7 +102,6 @@ class ID extends Module {
     .elsewhen(funct3 === "b110".U && funct7 === "b0000000".U) { io.uop := uopc.isOR   }
     .elsewhen(funct3 === "b111".U && funct7 === "b0000000".U) { io.uop := uopc.isAND  }
     .otherwise                                                 { io.XcptInvalid := true.B }
-  // I-type instructions (opcode 0x13)
   }.elsewhen(opcode === "b0010011".U) {
     io.operandB := immI
     when(funct3 === "b000".U)                                  { io.uop := uopc.isADDI  }
@@ -119,7 +114,6 @@ class ID extends Module {
     .elsewhen(funct3 === "b101".U && funct7 === "b0000000".U)  { io.uop := uopc.isSRLI  }
     .elsewhen(funct3 === "b101".U && funct7 === "b0100000".U)  { io.uop := uopc.isSRAI  }
     .otherwise                                                 { io.XcptInvalid := true.B }
-  // B-type instructions (opcode 0x63)
   }.elsewhen(opcode === "b1100011".U) {
     io.operandB := immB
     when(funct3 === "b000".U)      { io.uop := uopc.isBEQ  }
@@ -129,11 +123,9 @@ class ID extends Module {
     .elsewhen(funct3 === "b110".U) { io.uop := uopc.isBLTU }
     .elsewhen(funct3 === "b111".U) { io.uop := uopc.isBGEU }
     .otherwise                     { io.XcptInvalid := true.B }
-  // JAL (opcode 0x6f)
   }.elsewhen(opcode === "b1101111".U) {
     io.uop      := uopc.isJAL
     io.operandB := immJ
-  // JALR (opcode 0x67)
   }.elsewhen(opcode === "b1100111".U) {
     when(funct3 === "b000".U) {
       io.uop      := uopc.isJALR

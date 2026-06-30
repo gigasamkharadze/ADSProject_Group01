@@ -70,27 +70,21 @@ class EX extends Module {
 
   val alu = Module(new ALU)
 
-  // Forwarding logic
-  val forwardA = Wire(UInt(2.W))
-  val forwardB = Wire(UInt(2.W))
+  val fwd = Module(new ForwardingUnit)
 
-  // Forward operand A: prioritize MEM over WB
-  forwardA := Mux(io.wrEn_MEM && (io.rs1 === io.rd_MEM) && (io.rs1 =/= 0.U), 1.U,
-                  Mux(io.wrEn_WB && (io.rs1 === io.rd_WB) && (io.rs1 =/= 0.U), 2.U, 0.U))
+  fwd.io.rs1_EX := io.rs1
+  fwd.io.rs2_EX := io.rs2
 
-  // Forward operand B: prioritize MEM over WB
-  forwardB := Mux(io.wrEn_MEM && (io.rs2 === io.rd_MEM) && (io.rs2 =/= 0.U), 1.U,
-                  Mux(io.wrEn_WB && (io.rs2 === io.rd_WB) && (io.rs2 =/= 0.U), 2.U, 0.U))
+  fwd.io.rd_MEM   := io.rd_MEM
+  fwd.io.wrEn_MEM := io.wrEn_MEM
+  fwd.io.rd_WB    := io.rd_WB
+  fwd.io.wrEn_WB  := io.wrEn_WB
 
-  // Select ALU operand A
-  val aluOperandA = Mux(forwardA === 1.U, io.aluResult_MEM,
-                         Mux(forwardA === 2.U, io.aluResult_WB,
-                             io.operandA))
+  val forwardA = fwd.io.forwardA
+  val forwardB = fwd.io.forwardB
 
-  // Select ALU operand B
-  val aluOperandB = Mux(forwardB === 1.U, io.aluResult_MEM,
-                         Mux(forwardB === 2.U, io.aluResult_WB,
-                             io.operandB))
+  val aluOperandA = Mux(forwardA === 1.U, io.aluResult_MEM,  Mux(forwardA === 2.U, io.aluResult_WB, io.operandA))
+  val aluOperandB = Mux(forwardB === 1.U, io.aluResult_MEM, Mux(forwardB === 2.U, io.aluResult_WB, io.operandB))
 
   alu.io.operandA  := aluOperandA
   alu.io.operandB  := aluOperandB
@@ -119,7 +113,7 @@ class EX extends Module {
     is(uopc.isNOP)   { alu.io.operation := ALUOp.ADD  }
   }
 
-  // Branch condition evaluation
+  // Branch condition evaluation can only be done after ALU operation is complete
   val isEqual   = (aluOperandA === aluOperandB)
   val isLess    = aluOperandA.asSInt < aluOperandB.asSInt
   val isLessU   = aluOperandA < aluOperandB
@@ -137,7 +131,6 @@ class EX extends Module {
   branchTaken := false.B
   branchTarget := io.pc + 4.U
 
-  // Determine if branch is taken and calculate target
   when(io.uop === uopc.isBEQ) {
     branchTaken := beqTaken
     branchTarget := io.pc + io.operandB
@@ -161,13 +154,13 @@ class EX extends Module {
     branchTarget := io.pc + io.operandB
   }.elsewhen(io.uop === uopc.isJALR) {
     branchTaken := true.B
+    // & ~1.U = Address alignment for the next instruction. 0 the last bit
     branchTarget := (aluOperandA + io.operandB) & ~1.U
   }
 
-  // Output results
-  io.aluResult := Mux(io.uop === uopc.isJAL || io.uop === uopc.isJALR,
-                      io.pc + 4.U,
-                      alu.io.aluResult)
+  // Return address is stored within the ALU for JAL and JALR instructions
+  io.aluResult := Mux(io.uop === uopc.isJAL || io.uop === uopc.isJALR, io.pc + 4.U, alu.io.aluResult)
+
   io.rdOut       := io.rd
   io.exception   := io.XcptInvalid
   io.flush       := branchTaken

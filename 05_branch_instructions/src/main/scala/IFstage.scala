@@ -44,9 +44,10 @@ class IF (BinaryFile: String) extends Module {
   val io = IO(new Bundle {
     val instr           = Output(UInt(32.W))
     val pc              = Output(UInt(32.W))
-    val branchTaken     = Input(Bool())
-    val branchTarget    = Input(UInt(32.W))
+
+    // Flush signal to handle missed 'branch-taken's
     val flush           = Input(Bool())
+    val branchTarget    = Input(UInt(32.W))
   })
 
   val IMem = Mem(4096, UInt(32.W))
@@ -57,7 +58,6 @@ class IF (BinaryFile: String) extends Module {
   io.instr := IMem(PC >> 2)
   io.pc    := PC
 
-  // Update PC based on branch control signals
   when(io.flush) {
     PC := io.branchTarget
   }.otherwise {
