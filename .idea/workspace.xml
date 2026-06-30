@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8870d041-cb33-44b2-aa59-465edd8aeebd" name="Changes" comment="clean up code and add comments">
-      <change beforePath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/EXbarrier.scala" beforeDir="false" afterPath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/EXbarrier.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/MEMbarrier.scala" beforeDir="false" afterPath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/MEMbarrier.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/WBbarrier.scala" beforeDir="false" afterPath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/WBbarrier.scala" afterDir="false" />
+    <list default="true" id="8870d041-cb33-44b2-aa59-465edd8aeebd" name="Changes" comment="flush and calculated address do not go through stages after exec stage, we only use it for the new pc calculations">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/IDbarrier.scala" beforeDir="false" afterPath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/IDbarrier.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/IFbarrier.scala" beforeDir="false" afterPath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/IFbarrier.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/core.scala" beforeDir="false" afterPath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/core.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,61 +36,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.433306208515793" />
-      <entry key="MS500" value="3.278133297019262" />
-      <entry key="S2" value="4.6795844466978185" />
-      <entry key="S5" value="6.22455617224479" />
-      <entry key="S10" value="7.710685190553046" />
-      <entry key="S30" value="11.097215472197274" />
-      <entry key="S60" value="14.893717221856868" />
-      <entry key="M2" value="21.076338038099014" />
-      <entry key="M5" value="35.95095800816961" />
-      <entry key="M10" value="54.263372456402024" />
-      <entry key="M15" value="68.23867447535699" />
-      <entry key="M30" value="95.54796688204615" />
-      <entry key="H1" value="120.50679714526409" />
-      <entry key="H2" value="138.19635914464044" />
-      <entry key="H4" value="148.85828838916186" />
-      <entry key="D1" value="158.86365233206672" />
-      <entry key="W1" value="160.6919058432419" />
+      <entry key="MS100" value="1.3428591168281105" />
+      <entry key="MS500" value="3.2269743715059724" />
+      <entry key="S2" value="4.441440888816533" />
+      <entry key="S5" value="4.91367143123588" />
+      <entry key="S10" value="5.427352377359927" />
+      <entry key="S30" value="6.258938619506505" />
+      <entry key="S60" value="6.69126095172184" />
+      <entry key="M2" value="8.354436861029743" />
+      <entry key="M5" value="23.094440296204834" />
+      <entry key="M10" value="52.63060550877925" />
+      <entry key="M15" value="76.42993057952837" />
+      <entry key="M30" value="122.22641082277622" />
+      <entry key="H1" value="164.1274111545574" />
+      <entry key="H2" value="194.3010175210395" />
+      <entry key="H4" value="212.74286056756034" />
+      <entry key="D1" value="230.2395157730959" />
+      <entry key="W1" value="233.4571405816898" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="8.4E-323" />
-      <entry key="MS500" value="4.148431899831369E-65" />
-      <entry key="S2" value="1.1980668368979317E-16" />
-      <entry key="S5" value="6.405691853449948E-7" />
-      <entry key="S10" value="0.0011294577732709268" />
-      <entry key="S30" value="0.16523534463234005" />
-      <entry key="S60" value="0.5748315136905905" />
-      <entry key="M2" value="1.072207413672788" />
-      <entry key="M5" value="1.5585759313733754" />
-      <entry key="M10" value="1.7655447158670723" />
-      <entry key="M15" value="1.8404714655221943" />
-      <entry key="M30" value="1.9185782348083125" />
-      <entry key="H1" value="1.9588660858896003" />
-      <entry key="H2" value="1.9793261831541447" />
-      <entry key="H4" value="1.9896362376345627" />
-      <entry key="D1" value="1.9982689647019385" />
-      <entry key="W1" value="1.9997526174578333" />
+      <entry key="MS100" value="7.148367412800505E-61" />
+      <entry key="MS500" value="9.350640781631839E-13" />
+      <entry key="S2" value="9.833550293522648E-4" />
+      <entry key="S5" value="0.06267352724381738" />
+      <entry key="S10" value="0.25034681392794333" />
+      <entry key="S30" value="0.6302995719800498" />
+      <entry key="S60" value="0.8008119724674839" />
+      <entry key="M2" value="0.9783746540969914" />
+      <entry key="M5" value="1.4943687811615907" />
+      <entry key="M10" value="2.1678111191845315" />
+      <entry key="M15" value="2.581283232856511" />
+      <entry key="M30" value="3.1652759997191753" />
+      <entry key="H1" value="3.5449296842391473" />
+      <entry key="H2" value="3.762095050392966" />
+      <entry key="H4" value="3.8783265988000903" />
+      <entry key="D1" value="3.9793317535923376" />
+      <entry key="W1" value="3.9970377054426147" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.380248901995764" />
-      <entry key="MS500" value="3.2522562828982697" />
-      <entry key="S2" value="4.670187816837611" />
-      <entry key="S5" value="6.219476599250479" />
-      <entry key="S10" value="7.7085306695725615" />
-      <entry key="S30" value="11.255266936234177" />
-      <entry key="S60" value="15.457579258779594" />
-      <entry key="M2" value="22.138445837143106" />
-      <entry key="M5" value="37.503186195236474" />
-      <entry key="M10" value="56.02476815446007" />
-      <entry key="M15" value="70.0759458283328" />
-      <entry key="M30" value="97.46456092804905" />
-      <entry key="H1" value="122.46450866813451" />
-      <entry key="H2" value="140.17505273083032" />
-      <entry key="H4" value="150.84759198758505" />
-      <entry key="D1" value="160.86186333205123" />
-      <entry key="W1" value="162.69165011453333" />
+      <entry key="MS100" value="1.287114874875136" />
+      <entry key="MS500" value="3.1995676062921787" />
+      <entry key="S2" value="4.431974163586388" />
+      <entry key="S5" value="4.949983923725988" />
+      <entry key="S10" value="5.631927840008226" />
+      <entry key="S30" value="6.852230086095069" />
+      <entry key="S60" value="7.468630091868228" />
+      <entry key="M2" value="9.318146451637398" />
+      <entry key="M5" value="24.579561851509528" />
+      <entry key="M10" value="54.79169754229521" />
+      <entry key="M15" value="79.00578818265997" />
+      <entry key="M30" value="125.38817001073694" />
+      <entry key="H1" value="167.67025205543206" />
+      <entry key="H2" value="198.06195627680017" />
+      <entry key="H4" value="216.62057589732345" />
+      <entry key="D1" value="234.21874051461688" />
+      <entry key="W1" value="237.45416286622626" />
     </decayedShown>
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
@@ -146,7 +146,7 @@
       <workItem from="1782389540280" duration="629000" />
       <workItem from="1782392923217" duration="2725000" />
       <workItem from="1782473511743" duration="1266000" />
-      <workItem from="1782852602113" duration="4238000" />
+      <workItem from="1782852602113" duration="5567000" />
     </task>
     <task id="LOCAL-00001" summary="reuse module">
       <option name="closed" value="true" />
@@ -164,7 +164,15 @@
       <option name="project" value="LOCAL" />
       <updated>1782856514080</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="flush and calculated address do not go through stages after exec stage, we only use it for the new pc calculations">
+      <option name="closed" value="true" />
+      <created>1782856964132</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1782856964132</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,6 +192,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="reuse module" />
     <MESSAGE value="clean up code and add comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="clean up code and add comments" />
+    <MESSAGE value="flush and calculated address do not go through stages after exec stage, we only use it for the new pc calculations" />
+    <option name="LAST_COMMIT_MESSAGE" value="flush and calculated address do not go through stages after exec stage, we only use it for the new pc calculations" />
   </component>
 </project>

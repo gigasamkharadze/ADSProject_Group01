@@ -32,6 +32,8 @@ class IFBarrier extends Module {
   val io = IO(new Bundle {
     val inInstr   = Input(UInt(32.W))
     val inPC      = Input(UInt(32.W))
+    val flush     = Input(Bool())
+
     val outInstr  = Output(UInt(32.W))
     val outPC     = Output(UInt(32.W))
   })
@@ -41,6 +43,12 @@ class IFBarrier extends Module {
 
   instrReg := io.inInstr
   pcReg    := io.inPC
+
+  when(io.flush) {
+    instrReg := "h00000013".U   // NOP: addi x0, x0, 0
+  }.otherwise {
+    instrReg := io.inInstr
+  }
 
   io.outInstr := instrReg
   io.outPC    := pcReg

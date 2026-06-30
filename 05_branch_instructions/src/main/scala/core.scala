@@ -120,6 +120,9 @@ class PipelinedRV32Icore (BinaryFile: String) extends Module {
   ifStage.io.flush        := exStage.io.flush
   ifStage.io.branchTarget := exStage.io.branchTarget
 
+  ifBarrier.io.flush := exStage.io.flush
+  idBarrier.io.flush := exStage.io.flush
+
   // EX → EXBarrier
   exBarrier.io.inAluResult   := exStage.io.aluResult
   exBarrier.io.inRD          := exStage.io.rdOut
