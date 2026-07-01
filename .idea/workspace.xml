@@ -4,94 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8870d041-cb33-44b2-aa59-465edd8aeebd" name="Changes" comment="flush and calculated address do not go through stages after exec stage, we only use it for the new pc calculations">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/IDbarrier.scala" beforeDir="false" afterPath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/IDbarrier.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/IFbarrier.scala" beforeDir="false" afterPath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/IFbarrier.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/core.scala" beforeDir="false" afterPath="$PROJECT_DIR$/05_branch_instructions/src/main/scala/core.scala" afterDir="false" />
-    </list>
+    <list default="true" id="8870d041-cb33-44b2-aa59-465edd8aeebd" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="CopilotPersistence">
-    <persistenceIdMap>
-      <entry key="_/Users/gigasamkharadze/IdeaProjects/ADSProject_Group01" value="3FbKaXXfzFogokxN8IO9U9Ejjzq" />
-    </persistenceIdMap>
-  </component>
-  <component name="EmbeddingIndexingInfo">
-    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
-  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="KubernetesApiPersistence">{}</component>
-  <component name="KubernetesApiProvider">{
-  &quot;isMigrated&quot;: true
-}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
-  </component>
-  <component name="NextEditCompletionFeaturesState">
-    <decayedCancelled>
-      <entry key="MS100" value="1.3428591168281105" />
-      <entry key="MS500" value="3.2269743715059724" />
-      <entry key="S2" value="4.441440888816533" />
-      <entry key="S5" value="4.91367143123588" />
-      <entry key="S10" value="5.427352377359927" />
-      <entry key="S30" value="6.258938619506505" />
-      <entry key="S60" value="6.69126095172184" />
-      <entry key="M2" value="8.354436861029743" />
-      <entry key="M5" value="23.094440296204834" />
-      <entry key="M10" value="52.63060550877925" />
-      <entry key="M15" value="76.42993057952837" />
-      <entry key="M30" value="122.22641082277622" />
-      <entry key="H1" value="164.1274111545574" />
-      <entry key="H2" value="194.3010175210395" />
-      <entry key="H4" value="212.74286056756034" />
-      <entry key="D1" value="230.2395157730959" />
-      <entry key="W1" value="233.4571405816898" />
-    </decayedCancelled>
-    <decayedSelected>
-      <entry key="MS100" value="7.148367412800505E-61" />
-      <entry key="MS500" value="9.350640781631839E-13" />
-      <entry key="S2" value="9.833550293522648E-4" />
-      <entry key="S5" value="0.06267352724381738" />
-      <entry key="S10" value="0.25034681392794333" />
-      <entry key="S30" value="0.6302995719800498" />
-      <entry key="S60" value="0.8008119724674839" />
-      <entry key="M2" value="0.9783746540969914" />
-      <entry key="M5" value="1.4943687811615907" />
-      <entry key="M10" value="2.1678111191845315" />
-      <entry key="M15" value="2.581283232856511" />
-      <entry key="M30" value="3.1652759997191753" />
-      <entry key="H1" value="3.5449296842391473" />
-      <entry key="H2" value="3.762095050392966" />
-      <entry key="H4" value="3.8783265988000903" />
-      <entry key="D1" value="3.9793317535923376" />
-      <entry key="W1" value="3.9970377054426147" />
-    </decayedSelected>
-    <decayedShown>
-      <entry key="MS100" value="1.287114874875136" />
-      <entry key="MS500" value="3.1995676062921787" />
-      <entry key="S2" value="4.431974163586388" />
-      <entry key="S5" value="4.949983923725988" />
-      <entry key="S10" value="5.631927840008226" />
-      <entry key="S30" value="6.852230086095069" />
-      <entry key="S60" value="7.468630091868228" />
-      <entry key="M2" value="9.318146451637398" />
-      <entry key="M5" value="24.579561851509528" />
-      <entry key="M10" value="54.79169754229521" />
-      <entry key="M15" value="79.00578818265997" />
-      <entry key="M30" value="125.38817001073694" />
-      <entry key="H1" value="167.67025205543206" />
-      <entry key="H2" value="198.06195627680017" />
-      <entry key="H4" value="216.62057589732345" />
-      <entry key="D1" value="234.21874051461688" />
-      <entry key="W1" value="237.45416286622626" />
-    </decayedShown>
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -107,35 +36,15 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
+    "git-widget-placeholder": "05__branch__instructions",
     "last_opened_file_path": "C:/Users/gvant/OneDrive/Desktop/ADSProject_Group01",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.25134.95" />
-        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.25134.95" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="8870d041-cb33-44b2-aa59-465edd8aeebd" name="Changes" comment="" />
@@ -143,56 +52,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1779879870460</updated>
-      <workItem from="1782389540280" duration="629000" />
-      <workItem from="1782392923217" duration="2725000" />
-      <workItem from="1782473511743" duration="1266000" />
-      <workItem from="1782852602113" duration="5567000" />
     </task>
-    <task id="LOCAL-00001" summary="reuse module">
-      <option name="closed" value="true" />
-      <created>1782340338155</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1782340338155</updated>
-    </task>
-    <task id="LOCAL-00002" summary="clean up code and add comments">
-      <option name="closed" value="true" />
-      <created>1782856514080</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1782856514080</updated>
-    </task>
-    <task id="LOCAL-00003" summary="flush and calculated address do not go through stages after exec stage, we only use it for the new pc calculations">
-      <option name="closed" value="true" />
-      <created>1782856964132</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1782856964132</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="reuse module" />
-    <MESSAGE value="clean up code and add comments" />
-    <MESSAGE value="flush and calculated address do not go through stages after exec stage, we only use it for the new pc calculations" />
-    <option name="LAST_COMMIT_MESSAGE" value="flush and calculated address do not go through stages after exec stage, we only use it for the new pc calculations" />
   </component>
 </project>
