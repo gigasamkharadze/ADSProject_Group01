@@ -59,20 +59,19 @@ class PipelinedRV32Icore (BinaryFile: String, useBTB: Boolean = true) extends Mo
   if (useBTB) {
     val btb = Module(new BTB)
 
-    // Lookup, driven by the current fetch PC every cycle
+    // At every cc, BTB checks if the current PC is present in the table
     btb.io.PC := ifStage.io.pc
 
     ifStage.io.btbValid        := btb.io.valid
     ifStage.io.btbTarget       := btb.io.target
     ifStage.io.btbPredictTaken := btb.io.predictTaken
 
-    // Update, driven by EX once the branch has actually been resolved
+    // In the EX stage we evaluate the real outcome of the branch and update the BTB accordingly
     btb.io.update       := exStage.io.btbUpdate
     btb.io.updatePC      := exStage.io.btbUpdatePC
     btb.io.updateTarget  := exStage.io.btbUpdateTarget
     btb.io.mispredicted  := exStage.io.btbMispredicted
   } else {
-    // Static scheme (Assignment 5): no BTB, IF never gets a prediction
     ifStage.io.btbValid        := false.B
     ifStage.io.btbTarget       := 0.U
     ifStage.io.btbPredictTaken := false.B

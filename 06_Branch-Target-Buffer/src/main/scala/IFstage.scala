@@ -69,11 +69,10 @@ class IF (BinaryFile: String) extends Module {
   io.instr := IMem(PC >> 2)
   io.pc    := PC
 
-  // Update PC based on flush (misprediction / jump) and BTB dynamic prediction
   when(io.flush) {
-    PC := io.resolvedPC
-  }.elsewhen(io.btbValid && io.btbPredictTaken) {
-    PC := io.btbTarget
+    PC := io.resolvedPC  // Wrong Prediction, need to redirect to the correct PC
+  }.elsewhen(io.btbValid && io.btbPredictTaken) { // Entry was found in BTB and target was taken
+    PC := io.btbTarget // Predicted target address
   }.otherwise {
     PC := PC + 4.U
   }

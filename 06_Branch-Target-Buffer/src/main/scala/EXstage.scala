@@ -72,7 +72,6 @@ class EX extends Module {
     val predictTaken  = Input(Bool())
     val predictTarget = Input(UInt(32.W))
 
-    // Forwarding inputs from MEM and WB stages
     val aluResult_MEM = Input(UInt(32.W))
     val rd_MEM        = Input(UInt(5.W))
     val wrEn_MEM      = Input(Bool())
@@ -95,24 +94,19 @@ class EX extends Module {
 
   val alu = Module(new ALU)
 
-  // Forwarding logic
   val forwardA = Wire(UInt(2.W))
   val forwardB = Wire(UInt(2.W))
 
-  // Forward operand A: prioritize MEM over WB
   forwardA := Mux(io.wrEn_MEM && (io.rs1 === io.rd_MEM) && (io.rs1 =/= 0.U), 1.U,
                   Mux(io.wrEn_WB && (io.rs1 === io.rd_WB) && (io.rs1 =/= 0.U), 2.U, 0.U))
 
-  // Forward operand B: prioritize MEM over WB
   forwardB := Mux(io.wrEn_MEM && (io.rs2 === io.rd_MEM) && (io.rs2 =/= 0.U), 1.U,
                   Mux(io.wrEn_WB && (io.rs2 === io.rd_WB) && (io.rs2 =/= 0.U), 2.U, 0.U))
 
-  // Select ALU operand A
   val aluOperandA = Mux(forwardA === 1.U, io.aluResult_MEM,
                          Mux(forwardA === 2.U, io.aluResult_WB,
                              io.operandA))
 
-  // Select ALU operand B
   val aluOperandB = Mux(forwardB === 1.U, io.aluResult_MEM,
                          Mux(forwardB === 2.U, io.aluResult_WB,
                              io.operandB))
@@ -144,7 +138,6 @@ class EX extends Module {
     is(uopc.isNOP)   { alu.io.operation := ALUOp.ADD  }
   }
 
-  // Branch condition evaluation
   val isEqual   = (aluOperandA === aluOperandB)
   val isLess    = aluOperandA.asSInt < aluOperandB.asSInt
   val isLessU   = aluOperandA < aluOperandB
@@ -157,7 +150,7 @@ class EX extends Module {
   val bgeuTaken = !isLessU
 
   val branchTaken = Wire(Bool())
-  val branchTarget = Wire(UInt(32.W))   // target-if-taken, used as the BTB's cached target
+  val branchTarget = Wire(UInt(32.W))
 
   branchTaken := false.B
   branchTarget := io.pc + 4.U
@@ -166,7 +159,6 @@ class EX extends Module {
                       io.uop === uopc.isBGE || io.uop === uopc.isBLTU || io.uop === uopc.isBGEU
   val isJump       = io.uop === uopc.isJAL || io.uop === uopc.isJALR
 
-  // Determine if branch is taken and calculate target
   when(io.uop === uopc.isBEQ) {
     branchTaken := beqTaken
     branchTarget := io.pc + io.operandB
@@ -193,31 +185,28 @@ class EX extends Module {
     branchTarget := (aluOperandA + io.operandB) & ~1.U
   }
 
-  // Fall-through PC if the branch was actually not taken; taken-target otherwise.
-  // This (not the raw branchTarget, which always holds the taken-target regardless
-  // of the actual outcome) is what IF must be redirected to on a flush.
+
+  // PC contains the current instruction address, not the predicted one.
   val resolvedPC = Mux(branchTaken, branchTarget, io.pc + 4.U)
 
-  // A conditional branch is mispredicted if IF guessed the wrong direction, or
-  // guessed "taken" but with a stale/incorrect target address from the BTB.
-  val condMispredicted = (io.predictTaken =/= branchTaken) ||
-                          (branchTaken && io.predictTaken && (io.predictTarget =/= branchTarget))
+  // Here we already know whether the branch is taken or not, - based on ALU result.
+  // 1. Preduction was wrong
+  // 2. Prediction was right, but the predicted target was wrong (stale BTB entry)
+  val condMispredicted = (
+      io.predictTaken =/= branchTaken) ||
+      (branchTaken && io.predictTaken && (io.predictTarget =/= branchTarget))
 
-  // Only flush when the pipeline actually needs to be redirected: conditional
-  // branches only on misprediction (IF already followed the BTB's prediction
-  // otherwise), unconditional jumps always (they never consult the BTB in IF)
+  // For unconditional jumps, we always flush, since the BTB is never updated
+  // For conditional branches, we only flush if the prediction was wrong
   val mispredictedOrJump = Mux(isCondBranch, condMispredicted, isJump)
 
-  // Output results
-  io.aluResult := Mux(io.uop === uopc.isJAL || io.uop === uopc.isJALR,
-                      io.pc + 4.U,
-                      alu.io.aluResult)
+
+  io.aluResult := Mux(io.uop === uopc.isJAL || io.uop === uopc.isJALR, io.pc + 4.U, alu.io.aluResult)
   io.rdOut       := io.rd
   io.exception   := io.XcptInvalid
   io.flush       := mispredictedOrJump
   io.branchTarget := resolvedPC
 
-  // BTB update: only conditional branches ever populate/refresh the BTB
   io.btbUpdate      := isCondBranch
   io.btbUpdatePC     := io.pc
   io.btbUpdateTarget := branchTarget

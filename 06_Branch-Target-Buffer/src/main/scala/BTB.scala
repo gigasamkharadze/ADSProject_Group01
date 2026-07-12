@@ -48,10 +48,6 @@ package core_tile
 import chisel3._
 import chisel3.util._
 
-// -----------------------------------------
-// BTB Entry
-// -----------------------------------------
-
 class BTBEntry extends Bundle {
   val valid  = Bool()
   val tag    = UInt(27.W)
@@ -59,16 +55,12 @@ class BTBEntry extends Bundle {
   val state  = PredictorState()
 }
 
-// -----------------------------------------
-// Branch Target Buffer
-// -----------------------------------------
-
 class BTB extends Module {
   val io = IO(new Bundle {
-    val PC           = Input(UInt(32.W))
-    val update        = Input(Bool())
-    val updatePC       = Input(UInt(32.W))
-    val updateTarget   = Input(UInt(32.W))
+    val PC           = Input(UInt(32.W)) // for btb lookup
+    val update        = Input(Bool()) // from exec stage, correct prediction
+    val updatePC       = Input(UInt(32.W)) // For BTB update
+    val updateTarget   = Input(UInt(32.W)) // For BTB update
     val mispredicted   = Input(Bool())
 
     val valid          = Output(Bool())
@@ -78,30 +70,24 @@ class BTB extends Module {
 
   val NumSets = 8
   val NumWays = 2
+  val predictor = Module(new BranchPredictor)
 
-  // Initial predictor state assigned to newly allocated entries. WeakTaken is chosen
-  // because conditional branches in typical programs are dominated by backward
-  // (loop-closing) branches, which are taken far more often than not; starting one
-  // step into "taken" territory reaches the correct prediction faster for loops
-  // than starting at strongNotTaken, while still flipping after a single misprediction
-  // if the branch turns out to be a forward/rarely-taken one (cf. Task 6.1 answers
-  // in IMPLEMENTATION.md).
+  // weakTaken because of loops
   val InitialState = PredictorState.weakTaken
 
+  // specifications of the address construction
   def setIndex(pc: UInt): UInt = pc(4, 2)
   def tagBits(pc: UInt): UInt  = pc(31, 5)
 
-  // 8 sets x 2 ways of BTB entries, reset to all-invalid
-  val table = RegInit(VecInit(Seq.fill(NumSets)(VecInit(Seq.fill(NumWays)(0.U.asTypeOf(new BTBEntry))))))
+  // default BTB table constructed; initially, all entries are invalid.
+  val table = RegInit(
+      VecInit(Seq.fill(NumSets)
+                (VecInit(Seq.fill(NumWays)
+                  (0.U.asTypeOf(new BTBEntry)))))
+  )
 
-  // 1-bit "most recently used way" pointer per set, used for LRU eviction
-  val mru = RegInit(VecInit(Seq.fill(NumSets)(false.B))) // false = way0 MRU, true = way1 MRU
-
-  val predictor = Module(new BranchPredictor)
-
-  // ------------------------------------------------------------------
-  // Lookup path (combinational): driven by the fetch PC every cycle
-  // ------------------------------------------------------------------
+  // In the beginning, no entry is read (least recently used)
+  val mru = RegInit(VecInit(Seq.fill(NumSets)(false.B)))
 
   val lookupIdx = setIndex(io.PC)
   val lookupTag = tagBits(io.PC)
@@ -111,41 +97,46 @@ class BTB extends Module {
   val lookupHitWay1 = lookupSet(1).valid && (lookupSet(1).tag === lookupTag)
 
   io.valid        := lookupHitWay0 || lookupHitWay1
+
+  // if not valid, ignored; else taken from either hit0 or hit1
   io.target       := Mux(lookupHitWay0, lookupSet(0).target, lookupSet(1).target)
   io.predictTaken := Mux(lookupHitWay0,
                           PredictorState.isTaken(lookupSet(0).state),
                           PredictorState.isTaken(lookupSet(1).state))
 
-  // ------------------------------------------------------------------
-  // Update path (synchronous): driven by the EX stage once the actual
-  // branch outcome and target are known
-  // ------------------------------------------------------------------
-
   val updIdx = setIndex(io.updatePC)
   val updTag = tagBits(io.updatePC)
   val updSet = table(updIdx)
 
+  // The branch already has a BTB entry.
   val updHitWay0 = updSet(0).valid && (updSet(0).tag === updTag)
   val updHitWay1 = updSet(1).valid && (updSet(1).tag === updTag)
   val updHit     = updHitWay0 || updHitWay1
 
-  // Reconstruct the actual outcome of the branch from the prediction that was
-  // handed out for it (the state currently stored for this entry) and whether
-  // that prediction turned out to be wrong. This lets the BTB derive the outcome
-  // needed to drive the saturating counter from the single "mispredicted" input
-  // signal specified by the interface, without having to pipe a separate
-  // "actually taken" signal in from the core.
+  // use state of the way that hits the correct PC
   val predictedTakenAtIssue = Mux(updHitWay0, PredictorState.isTaken(updSet(0).state),
                               Mux(updHitWay1, PredictorState.isTaken(updSet(1).state),
-                                  false.B)) // no entry existed yet -> IF defaulted to "not taken"
+                                false.B))
+
+  // If prediction was correct, actual outcome equals prediction.
+  // If prediction was wrong, actual outcome is the opposite.
   val actualTaken = predictedTakenAtIssue ^ io.mispredicted
 
-  // Way selected to receive the write: the hit way on an update, otherwise a free
-  // (invalid) way if one exists, otherwise the LRU way of the two.
-  val allocateWay1 = Mux(updHit, updHitWay1,
-                      Mux(!updSet(0).valid, false.B,
-                      Mux(!updSet(1).valid, true.B,
-                          !mru(updIdx)))) // both ways in use -> evict the LRU (non-MRU) way
+  val allocateWay1 = Mux(
+    updHit,
+    updHitWay1, // if hit, allocate in the way that hits the correct PC
+
+    Mux( // if not hit, allocate invalid way
+        !updSet(0).valid,
+        false.B,
+        Mux(
+
+          !updSet(1).valid,
+          true.B,
+          !mru(updIdx) // if both ways are valid, allocate the LRU way
+        )
+    )
+  )
 
   predictor.io.currentState := Mux(allocateWay1, updSet(1).state, updSet(0).state)
   predictor.io.taken        := actualTaken

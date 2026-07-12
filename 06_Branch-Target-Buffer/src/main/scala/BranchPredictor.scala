@@ -64,13 +64,17 @@ class BranchPredictor extends Module {
   io.nextState := io.currentState
 
   when(io.taken) {
-    // move towards strongTaken, saturate at the top
     when(io.currentState =/= PredictorState.strongTaken) {
+      // strongNotTaken -> weakNotTaken
+      // weakNotTaken -> weakTaken
+      // weakTaken    -> strongTaken
       io.nextState := PredictorState(io.currentState.asUInt + 1.U)
     }
   }.otherwise {
-    // move towards strongNotTaken, saturate at the bottom
     when(io.currentState =/= PredictorState.strongNotTaken) {
+      // strongNotTaken -> strongNotTaken
+      // weakNotTaken -> weakNotTaken
+      // weakTaken    -> weakTaken
       io.nextState := PredictorState(io.currentState.asUInt - 1.U)
     }
   }
