@@ -7,32 +7,49 @@
 /*
 IF-Barrier: pipeline register between Fetch and Decode stages
 
-Internal Registers:
-    instrReg: holds instruction between pipeline stages, initialized to 0
-
-Inputs:
-    inInstr: fetched instruction from IF stage
-
-Outputs:
-    outInstr: instruction to ID stage
-
 Functionality:
-    Save all input signals to a register and output them in the following clock cycle
+    On flush: insert NOP (addi x0,x0,0) to squash wrong-path instruction
+    Otherwise: pass instruction, PC and the BTB prediction that was made for this
+    fetch through to ID, so that EX can later tell whether the prediction was correct
 */
 
 package core_tile
 
 import chisel3._
 
-// -----------------------------------------
-// IF-Barrier
-// -----------------------------------------
-
 class IFBarrier extends Module {
   val io = IO(new Bundle {
-    //ToDo: Add I/O ports
+    val inInstr           = Input(UInt(32.W))
+    val inPC              = Input(UInt(32.W))
+    val inPredictTaken    = Input(Bool())
+    val inPredictTarget   = Input(UInt(32.W))
+    val flush              = Input(Bool())
+
+    val outInstr           = Output(UInt(32.W))
+    val outPC              = Output(UInt(32.W))
+    val outPredictTaken    = Output(Bool())
+    val outPredictTarget   = Output(UInt(32.W))
   })
 
-//ToDo: Add your implementation according to the specification above here 
+  val instrReg         = RegInit(0.U(32.W))
+  val pcReg            = RegInit(0.U(32.W))
+  val predictTakenReg  = RegInit(false.B)
+  val predictTargetReg = RegInit(0.U(32.W))
 
+  when(io.flush) {
+    instrReg         := "h00000013".U   // NOP: addi x0, x0, 0
+    pcReg            := 0.U
+    predictTakenReg  := false.B
+    predictTargetReg := 0.U
+  }.otherwise {
+    instrReg         := io.inInstr
+    pcReg            := io.inPC
+    predictTakenReg  := io.inPredictTaken
+    predictTargetReg := io.inPredictTarget
+  }
+
+  io.outInstr         := instrReg
+  io.outPC            := pcReg
+  io.outPredictTaken  := predictTakenReg
+  io.outPredictTarget := predictTargetReg
 }
